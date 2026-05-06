@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="玉葱図鑑">
@@ -10,348 +10,419 @@
 <title>🧅 玉葱品種図鑑</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-
-<!-- PWA ICON (inline SVG → data URI) -->
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzJkNTAxNiIvPjxlbGxpcHNlIGN4PSI5MCIgY3k9IjExMCIgcng9IjU4IiByeT0iNTAiIGZpbGw9IiNmNWM4NDIiIG9wYWNpdHk9Ii45Ii8+PGVsbGlwc2UgY3g9IjkwIiBjeT0iMTA1IiByeD0iNDgiIHJ5PSI0MiIgZmlsbD0iI2U4YTgxMCIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTTkwIDYwIFE4MiA0MCA3OCAyNSIgc3Ryb2tlPSIjNGFhODIwIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik05MCA2MCBROSA5OCA0MiAxMDIgMjYiIHN0cm9rZT0iIzRhYTgyMCIgc3Ryb2tlLXdpZHRoPSI4IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNOTAgNjAgUSA5MCA0OCA5MCAzMCIgc3Ryb2tlPSIjMmQ3YTEwIiBzdHJva2Utd2lkdGg9IjciIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjcwIiBjeT0iMTA1IiByPSI2IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjMiLz48Y2lyY2xlIGN4PSI4NSIgY3k9Ijk2IiByPSI0IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjIiLz48L3N2Zz4=">
-
 <style>
-:root{
-  --g1:#2d5016;--g2:#3d6b1e;--g3:#5a9030;--g4:#7ab84a;
-  --amber:#c8820a;--amber-l:#f5c842;--amber-pale:#fff8e8;
-  --cream:#faf8f2;--cream2:#f2ebe0;--cream3:#e8dfc8;
-  --t1:#1e1e1e;--t2:#4a4535;--t3:#9a9080;
-  --bd:rgba(0,0,0,0.08);--sh:0 2px 16px rgba(0,0,0,0.07);
-  --r:16px;--rs:10px;
-  --orange:#c45520;--teal:#157a5a;--purple:#5040b0;
-  --pink:#b84070;--blue:#1a5fa8;--crimson:#8a2020;--gold:#a06010;
+/* =============================================
+   VARIABLES
+============================================= */
+:root {
+  --g1:#2d5016; --g2:#3d6b1e; --g3:#5a9030; --g4:#8aba50;
+  --amber:#c8820a; --amber-l:#f5c842; --amber-pale:#fffae8;
+  --cream:#faf8f2; --cream2:#f2ebe0; --cream3:#e8dfc8;
+  --t1:#1e1e1e; --t2:#4a4535; --t3:#9a9080;
+  --bd:rgba(0,0,0,0.09); --sh:0 2px 16px rgba(0,0,0,0.07);
+  --r:14px; --rs:10px;
+  --orange:#c45520; --teal:#157a5a; --purple:#5040b0;
+  --pink:#b84070; --blue:#1a5fa8; --crimson:#8a2020; --gold:#a06010;
   --star:#d4a012;
-  --safe-t:env(safe-area-inset-top,0px);
-  --safe-b:env(safe-area-inset-bottom,0px);
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;font-family:'Noto Sans JP',sans-serif;background:var(--cream);color:var(--t1)}
-
-/* ===== APP SHELL ===== */
-#app{
-  display:flex;flex-direction:column;
-  height:100dvh;max-width:480px;
-  margin:0 auto;background:var(--cream);
-  box-shadow:0 0 60px rgba(0,0,0,0.18);
-  overflow:hidden;position:relative;
+* { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Noto Sans JP', sans-serif;
+  background:var(--cream);
+  color:var(--t1);
+  min-height:100vh;
 }
 
-/* ===== HEADER ===== */
-.hdr{
-  background:linear-gradient(160deg,#1e3a08 0%,#2d5016 50%,#3a6a1a 100%);
-  padding:calc(14px + var(--safe-t)) 16px 0;
-  flex-shrink:0;position:relative;overflow:hidden;
+/* =============================================
+   HEADER
+============================================= */
+.site-header {
+  background:linear-gradient(160deg,#1e3a08 0%,#2d5016 55%,#3a6a1a 100%);
+  position:sticky; top:0; z-index:100;
+  box-shadow:0 2px 20px rgba(0,0,0,0.25);
 }
-/* 背景テクスチャ */
-.hdr::after{
+.site-header::after {
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:
-    radial-gradient(circle at 15% 50%,rgba(255,255,255,0.04) 0%,transparent 40%),
-    radial-gradient(circle at 85% 20%,rgba(245,200,66,0.07) 0%,transparent 35%);
+  background:radial-gradient(ellipse at 90% 0%,rgba(245,200,66,0.08) 0%,transparent 50%);
 }
-.hdr-top{
-  display:flex;align-items:center;
+.hdr-inner {
+  max-width:1200px; margin:0 auto;
+  padding:0 24px;
+  display:flex; align-items:center;
   justify-content:space-between;
-  margin-bottom:10px;position:relative;z-index:1;
+  height:70px; position:relative; z-index:1;
 }
-.hdr-brand{display:flex;align-items:center;gap:10px}
-.hdr-icon{width:44px;height:44px;flex-shrink:0}
-.hdr-text{}
-.hdr-title{
-  font-family:'Noto Serif JP',serif;
-  font-size:19px;font-weight:700;color:#fff;
-  letter-spacing:.06em;line-height:1.2;
+.hdr-brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.hdr-icon-wrap { width:48px; height:48px; flex-shrink:0; }
+.hdr-text {}
+.hdr-title {
+  font-family:'Noto Serif JP', serif;
+  font-size:20px; font-weight:700;
+  color:#fff; letter-spacing:.06em; line-height:1.2;
 }
-.hdr-en{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.12em;margin-top:1px}
-.hdr-btns{display:flex;gap:7px}
-.hbtn{
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.22);
-  color:#fff;border-radius:22px;
-  padding:8px 14px;font-size:12px;font-weight:500;
-  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
-  display:flex;align-items:center;gap:5px;
-  transition:all .15s;white-space:nowrap;
+.hdr-en { font-size:10px; color:rgba(255,255,255,0.42); letter-spacing:.14em; margin-top:1px; }
+.hdr-right { display:flex; align-items:center; gap:10px; }
+.hdr-count {
+  font-size:12px; color:rgba(255,255,255,0.55);
+  background:rgba(255,255,255,0.1);
+  border-radius:20px; padding:4px 12px;
 }
-.hbtn:active{background:rgba(255,255,255,0.28)}
-.hbtn.accent{background:rgba(245,200,66,0.22);border-color:rgba(245,200,66,0.4);color:var(--amber-l)}
-.hdr-sub{
-  font-size:10.5px;color:rgba(255,255,255,0.42);
-  padding-bottom:11px;position:relative;z-index:1;
+.btn-add {
+  background:rgba(245,200,66,0.2);
+  border:1.5px solid rgba(245,200,66,0.45);
+  color:var(--amber-l);
+  border-radius:22px; padding:9px 18px;
+  font-size:13px; font-weight:700;
+  cursor:pointer; font-family:'Noto Sans JP',sans-serif;
+  display:flex; align-items:center; gap:6px;
+  transition:all .15s; white-space:nowrap;
 }
+.btn-add:hover { background:rgba(245,200,66,0.32); }
+.btn-add:active { background:rgba(245,200,66,0.42); }
 
-/* ===== TABS ===== */
-.tabs{
-  background:linear-gradient(160deg,#1e3a08 0%,#2d5016 50%,#3a6a1a 100%);
-  padding:0 12px 11px;
-  display:flex;gap:6px;
-  overflow-x:auto;scrollbar-width:none;flex-shrink:0;
+/* =============================================
+   TAB BAR
+============================================= */
+.tab-bar {
+  background:linear-gradient(160deg,#1e3a08 0%,#2d5016 55%,#3a6a1a 100%);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  position:sticky; top:70px; z-index:99;
 }
-.tabs::-webkit-scrollbar{display:none}
-.tbtn{
-  flex-shrink:0;padding:5px 13px;
-  font-size:11.5px;font-weight:500;
+.tab-inner {
+  max-width:1200px; margin:0 auto;
+  padding:0 20px 12px;
+  display:flex; gap:6px;
+  overflow-x:auto; scrollbar-width:none;
+}
+.tab-inner::-webkit-scrollbar { display:none; }
+.tbtn {
+  flex-shrink:0; padding:6px 15px;
+  font-size:12.5px; font-weight:500;
   border-radius:22px;
-  border:1.5px solid rgba(255,255,255,0.2);
-  background:transparent;color:rgba(255,255,255,0.6);
-  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  border:1.5px solid rgba(255,255,255,0.22);
+  background:transparent; color:rgba(255,255,255,0.62);
+  cursor:pointer; font-family:'Noto Sans JP',sans-serif;
   transition:all .15s;
 }
-.tbtn.active{
-  background:#fff;color:var(--g1);
-  border-color:#fff;font-weight:700;
+.tbtn:hover { background:rgba(255,255,255,0.12); }
+.tbtn.active {
+  background:#fff; color:var(--g1);
+  border-color:#fff; font-weight:700;
 }
-.cnt{
+.tbtn .cnt {
   display:inline-block;
   background:rgba(255,255,255,0.18);
-  font-size:10px;padding:0 5px;
-  border-radius:8px;margin-left:3px;
+  font-size:10px; padding:0 5px;
+  border-radius:8px; margin-left:3px;
 }
-.tbtn.active .cnt{background:var(--cream2);color:var(--g2)}
+.tbtn.active .cnt { background:var(--cream2); color:var(--g2); }
 
-/* ===== SCROLL ===== */
-.scroll{
-  flex:1;overflow-y:auto;
-  padding:14px 12px calc(24px + var(--safe-b));
-  -webkit-overflow-scrolling:touch;
+/* =============================================
+   MAIN LAYOUT
+============================================= */
+.main {
+  max-width:1200px; margin:0 auto;
+  padding:28px 24px 60px;
 }
 
-/* ===== LEGEND ===== */
-.legend{
-  display:flex;gap:6px;flex-wrap:wrap;
-  margin-bottom:14px;padding:10px 13px;
-  background:#fff;border-radius:var(--rs);
-  border:1px solid var(--bd);
-  box-shadow:var(--sh);
+/* =============================================
+   LEGEND
+============================================= */
+.legend {
+  display:flex; gap:8px; flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:24px; padding:12px 16px;
+  background:#fff; border-radius:var(--rs);
+  border:1px solid var(--bd); box-shadow:var(--sh);
 }
-.lgnd-ttl{font-size:10px;color:var(--t3);width:100%}
-.lb{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
-.lk{background:#e8f5e0;color:#2d6a14;border:1px solid #a8d878}
-.lh{background:#e0eef8;color:#1a4f8a;border:1px solid #78aae0}
-.lboth{background:#ede8f8;color:#3830a0;border:1px solid #a898e8}
-.ln{background:#fff3e0;color:#a06010;border:1px solid #f0b840}
+.legend-ttl { font-size:11px; color:var(--t3); margin-right:4px; }
+.lb { font-size:11.5px; font-weight:500; padding:4px 12px; border-radius:20px; }
+.lk  { background:#e8f5e0; color:#2d6a14; border:1px solid #a8d878; }
+.lh  { background:#e0eef8; color:#1a4f8a; border:1px solid #78aae0; }
+.lboth { background:#ede8f8; color:#3830a0; border:1px solid #a898e8; }
+.ln  { background:#fff3e0; color:#a06010; border:1px solid #f0b840; }
 
-/* ===== CATEGORY ===== */
-.cat-sec{margin-bottom:22px}
-.cat-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.cat-badge{font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;color:#fff;letter-spacing:.03em}
-.cat-desc{
-  font-size:11.5px;color:var(--t2);line-height:1.75;
-  margin-bottom:11px;padding:9px 12px;
+/* =============================================
+   CATEGORY SECTION
+============================================= */
+.cat-sec { margin-bottom:36px; }
+.cat-hdr { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.cat-badge {
+  font-size:12px; font-weight:700;
+  padding:5px 16px; border-radius:20px;
+  color:#fff; letter-spacing:.03em;
+}
+.cat-desc {
+  font-size:12px; color:var(--t2); line-height:1.8;
+  margin-bottom:14px; padding:10px 14px;
   background:rgba(0,0,0,0.025);
   border-radius:var(--rs);
   border-left:3px solid var(--cream3);
 }
 
-/* ===== ATTENTION BANNER ===== */
-.att{
+/* ATTENTION BANNER */
+.att-banner {
   background:linear-gradient(135deg,#231000 0%,#5a2800 60%,#7a3800 100%);
-  border-radius:var(--r);padding:14px;
-  margin-bottom:13px;
-  display:flex;align-items:center;gap:12px;
-  box-shadow:0 4px 20px rgba(100,40,0,0.25);
+  border-radius:var(--r); padding:18px 20px;
+  margin-bottom:14px;
+  display:flex; align-items:center; gap:14px;
+  box-shadow:0 4px 20px rgba(100,40,0,0.2);
 }
-.att-ico{font-size:30px;flex-shrink:0}
-.att h3{color:var(--amber-l);font-size:13.5px;font-weight:700}
-.att p{color:rgba(255,255,255,0.6);font-size:11px;margin-top:3px;line-height:1.55}
+.att-ico { font-size:32px; flex-shrink:0; }
+.att-txt h3 { color:var(--amber-l); font-size:15px; font-weight:700; }
+.att-txt p { color:rgba(255,255,255,0.62); font-size:12px; margin-top:3px; line-height:1.6; }
 
-/* ===== CARD ===== */
-.card{
-  background:#fff;border-radius:var(--r);
-  border:1px solid var(--bd);
-  padding:15px;margin-bottom:11px;
-  box-shadow:var(--sh);
+/* =============================================
+   CARD GRID
+============================================= */
+.card-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+  gap:16px;
 }
-.card-hdr{display:flex;align-items:flex-start;gap:11px;margin-bottom:13px}
-.onion-svg{width:52px;height:52px;flex-shrink:0}
-.cmeta{flex:1;min-width:0}
-.cnrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.cname{font-size:15px;font-weight:700;color:var(--t1)}
-.ob{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
-.ok{background:#e8f5e0;color:#2d6a14;border:1px solid #a8d878}
-.oh{background:#e0eef8;color:#1a4f8a;border:1px solid #78aae0}
-.oboth{background:#ede8f8;color:#3830a0;border:1px solid #a898e8}
-.on{background:#fff3e0;color:#a06010;border:1px solid #f0b840}
-.cmkr{font-size:11px;color:var(--t3);margin-top:3px}
-.tagrow{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
-.tag{
-  font-size:10.5px;padding:2px 8px;border-radius:6px;
-  background:var(--cream2);color:var(--t2);
+
+/* =============================================
+   CARD
+============================================= */
+.card {
+  background:#fff; border-radius:var(--r);
+  border:1px solid var(--bd);
+  padding:18px; box-shadow:var(--sh);
+  display:flex; flex-direction:column;
+  transition:box-shadow .2s, transform .2s;
+}
+.card:hover {
+  box-shadow:0 6px 28px rgba(0,0,0,0.12);
+  transform:translateY(-2px);
+}
+.card-hdr { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+.onion-svg { width:56px; height:56px; flex-shrink:0; }
+.cmeta { flex:1; min-width:0; }
+.cnrow { display:flex; align-items:center; gap:7px; flex-wrap:wrap; }
+.cname { font-size:16px; font-weight:700; color:var(--t1); }
+.ob { font-size:10.5px; font-weight:500; padding:2px 9px; border-radius:20px; }
+.ok    { background:#e8f5e0; color:#2d6a14; border:1px solid #a8d878; }
+.oh    { background:#e0eef8; color:#1a4f8a; border:1px solid #78aae0; }
+.oboth { background:#ede8f8; color:#3830a0; border:1px solid #a898e8; }
+.on    { background:#fff3e0; color:#a06010; border:1px solid #f0b840; }
+.cmkr  { font-size:11.5px; color:var(--t3); margin-top:3px; }
+.tagrow { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+.tag {
+  font-size:11px; padding:2px 8px; border-radius:6px;
+  background:var(--cream2); color:var(--t2);
   border:1px solid rgba(0,0,0,0.07);
 }
 
-/* ===== CALENDAR ===== */
-.cal{margin-bottom:11px}
-.cl-lbl{font-size:10px;color:var(--t3);margin-bottom:4px}
-.cl-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
-.cl-m{font-size:8.5px;color:var(--t3);text-align:center;padding-bottom:2px}
-.cl-b{height:9px;border-radius:2px;background:#eee}
-.cs{background:var(--orange)}
-.ct{background:var(--teal)}
-.ch{background:var(--purple)}
-.cl-leg{display:flex;gap:12px;margin-top:6px}
-.cli{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--t2)}
-.cld{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+/* CALENDAR */
+.cal { margin-bottom:12px; }
+.cl-lbl { font-size:10.5px; color:var(--t3); margin-bottom:4px; }
+.cl-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:2px; }
+.cl-m { font-size:9px; color:var(--t3); text-align:center; padding-bottom:2px; }
+.cl-b { height:10px; border-radius:2px; background:#eee; }
+.cs { background:var(--orange); }
+.ct { background:var(--teal); }
+.ch { background:var(--purple); }
+.cl-leg { display:flex; gap:14px; margin-top:6px; }
+.cli { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--t2); }
+.cld { width:10px; height:10px; border-radius:2px; flex-shrink:0; }
 
-/* ===== FEAT ===== */
-.fg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
-.fbox{background:var(--cream2);border-radius:var(--rs);padding:8px 11px;text-align:center}
-.flbl{font-size:10px;color:var(--t3)}
-.fval{font-size:12px;font-weight:700;color:var(--t1);margin-top:2px}
-.rrow{display:flex;gap:16px;margin-bottom:8px}
-.stars{color:var(--star);font-size:12px;letter-spacing:1px}
-.cnote{font-size:11.5px;color:var(--t2);line-height:1.75}
+/* FEAT */
+.feat-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px; }
+.fbox { background:var(--cream2); border-radius:var(--rs); padding:8px 12px; text-align:center; }
+.flbl { font-size:10.5px; color:var(--t3); }
+.fval { font-size:13px; font-weight:700; color:var(--t1); margin-top:2px; }
+.rrow { display:flex; gap:20px; margin-bottom:9px; }
+.stars { color:var(--star); font-size:13px; letter-spacing:1px; }
+.cnote { font-size:12px; color:var(--t2); line-height:1.8; }
 
-/* ===== MODALS ===== */
-.ov{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,0.55);z-index:300;
-  align-items:flex-end;justify-content:center;
-  max-width:480px;margin:0 auto;
+/* =============================================
+   EMPTY STATE
+============================================= */
+.empty {
+  text-align:center; padding:60px 20px;
+  color:var(--t3); grid-column:1/-1;
 }
-.ov.open{display:flex}
-.sheet{
-  background:#fff;border-radius:22px 22px 0 0;
-  width:100%;max-height:93dvh;
-  overflow-y:auto;
-  padding:0 17px calc(30px + var(--safe-b));
+.empty .ei { font-size:56px; margin-bottom:14px; }
+.empty p { font-size:14px; line-height:1.75; }
+
+/* =============================================
+   MODAL OVERLAY
+============================================= */
+.ov {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.5); z-index:500;
+  align-items:center; justify-content:center;
+  padding:20px;
 }
-.sh-hnd{
-  width:42px;height:4px;background:#ddd;
-  border-radius:2px;margin:14px auto 17px;
+.ov.open { display:flex; }
+
+/* MODAL BOX (PC: center dialog / SP: bottom sheet) */
+.modal-box {
+  background:#fff;
+  border-radius:20px;
+  width:100%; max-width:560px;
+  max-height:90vh; overflow-y:auto;
+  padding:32px 28px 36px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.25);
+  position:relative;
 }
-.sh-ttl{font-size:17px;font-weight:700;margin-bottom:17px;color:var(--t1)}
-.fg{margin-bottom:14px}
-.flb{font-size:12px;font-weight:500;color:var(--t2);margin-bottom:5px;display:block}
-.fi,.fs,.fta{
-  width:100%;padding:11px 13px;
-  border:1.5px solid var(--bd);border-radius:var(--rs);
-  font-size:14px;font-family:'Noto Sans JP',sans-serif;
-  background:#fff;color:var(--t1);
-  outline:none;transition:border-color .15s;
+.modal-close {
+  position:absolute; top:18px; right:20px;
+  background:var(--cream2); border:none;
+  width:32px; height:32px; border-radius:50%;
+  font-size:16px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--t2); transition:background .15s;
+}
+.modal-close:hover { background:var(--cream3); }
+.modal-title { font-size:19px; font-weight:700; margin-bottom:20px; color:var(--t1); }
+.fg { margin-bottom:15px; }
+.flb { font-size:12.5px; font-weight:500; color:var(--t2); margin-bottom:5px; display:block; }
+.fi, .fs, .fta {
+  width:100%; padding:11px 13px;
+  border:1.5px solid var(--bd); border-radius:var(--rs);
+  font-size:14px; font-family:'Noto Sans JP',sans-serif;
+  background:#fff; color:var(--t1);
+  outline:none; transition:border-color .15s;
   -webkit-appearance:none;
 }
-.fi:focus,.fs:focus,.fta:focus{border-color:var(--g3)}
-.fta{resize:vertical;min-height:75px;line-height:1.65}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.btnp{
-  width:100%;padding:14px;
-  background:var(--g1);color:#fff;border:none;
-  border-radius:var(--rs);font-size:15px;font-weight:700;
+.fi:focus, .fs:focus, .fta:focus { border-color:var(--g3); }
+.fta { resize:vertical; min-height:80px; line-height:1.7; }
+.frow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.btn-submit {
+  width:100%; padding:14px;
+  background:var(--g1); color:#fff; border:none;
+  border-radius:var(--rs); font-size:15px; font-weight:700;
   font-family:'Noto Sans JP',sans-serif;
-  cursor:pointer;margin-top:7px;transition:background .15s;
+  cursor:pointer; margin-top:8px; transition:background .15s;
 }
-.btnp:active{background:var(--g2)}
-.btns{
-  width:100%;padding:12px;background:transparent;
-  color:var(--t2);border:1.5px solid var(--bd);
-  border-radius:var(--rs);font-size:14px;
+.btn-submit:hover { background:var(--g2); }
+.btn-submit:active { background:var(--g3); }
+.btn-cancel {
+  width:100%; padding:12px; background:transparent;
+  color:var(--t2); border:1.5px solid var(--bd);
+  border-radius:var(--rs); font-size:14px;
   font-family:'Noto Sans JP',sans-serif;
-  cursor:pointer;margin-top:9px;
+  cursor:pointer; margin-top:10px;
+  transition:background .15s;
 }
+.btn-cancel:hover { background:var(--cream2); }
 
-/* ===== TOAST ===== */
-.toast{
-  position:fixed;
-  top:calc(20px + var(--safe-t));left:50%;
-  transform:translateX(-50%) translateY(-90px);
-  background:var(--g1);color:#fff;
-  padding:11px 22px;border-radius:32px;
-  font-size:13px;font-weight:500;z-index:999;
+/* =============================================
+   TOAST
+============================================= */
+.toast {
+  position:fixed; bottom:32px; left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--g1); color:#fff;
+  padding:12px 24px; border-radius:32px;
+  font-size:13.5px; font-weight:500; z-index:999;
   transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-  white-space:nowrap;pointer-events:none;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  white-space:nowrap; pointer-events:none;
+  box-shadow:0 6px 24px rgba(0,0,0,0.22);
 }
-.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.show { transform:translateX(-50%) translateY(0); }
 
-/* ===== EMPTY ===== */
-.empty{text-align:center;padding:48px 20px;color:var(--t3)}
-.empty .ei{font-size:48px;margin-bottom:12px}
-.empty p{font-size:13px;line-height:1.75}
+/* =============================================
+   RESPONSIVE — MOBILE
+============================================= */
+@media (max-width:640px) {
+  .hdr-inner { padding:0 16px; height:62px; }
+  .hdr-title { font-size:17px; }
+  .hdr-icon-wrap { width:42px; height:42px; }
+  .hdr-count { display:none; }
+  .btn-add { padding:8px 14px; font-size:12px; }
+  .tab-bar { top:62px; }
+  .tab-inner { padding:0 12px 10px; gap:5px; }
+  .main { padding:18px 12px 50px; }
+  .card-grid { grid-template-columns:1fr; gap:12px; }
+  .legend { margin-bottom:16px; }
 
-/* ===== DESKTOP ===== */
-@media(min-width:500px){
-  body{background:#d8d0c0;display:flex;align-items:center;justify-content:center;height:100vh}
-  #app{height:min(900px,96dvh);border-radius:26px}
-  .ov{border-radius:26px;overflow:hidden}
+  /* Mobile: modal as bottom sheet */
+  .ov { padding:0; align-items:flex-end; }
+  .modal-box {
+    border-radius:22px 22px 0 0;
+    max-height:93dvh; padding:24px 18px 36px;
+    max-width:100%;
+  }
+  .modal-close { display:none; }
+  .modal-box::before {
+    content:''; display:block;
+    width:40px; height:4px; background:#ddd;
+    border-radius:2px; margin:0 auto 18px;
+  }
+
+  .toast { bottom:24px; font-size:13px; }
+}
+
+@media (min-width:641px) and (max-width:900px) {
+  .card-grid { grid-template-columns:repeat(2, 1fr); }
+}
+
+@media (min-width:901px) {
+  .card-grid { grid-template-columns:repeat(3, 1fr); }
 }
 </style>
 </head>
 <body>
-<div id="app">
 
-  <!-- HEADER -->
-  <div class="hdr">
-    <div class="hdr-top">
-      <div class="hdr-brand">
-        <!-- アプリアイコン（かわいいSVG玉葱キャラ） -->
-        <svg class="hdr-icon" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-          <!-- 丸いグリーン背景 -->
-          <circle cx="22" cy="22" r="21" fill="#3d7020"/>
-          <!-- 光沢 -->
-          <ellipse cx="14" cy="10" rx="7" ry="4" fill="rgba(255,255,255,0.12)"/>
-          <!-- 葉っぱ（左） -->
-          <path d="M22 17 Q17 9 15 4" stroke="#7acc40" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- 葉っぱ（右） -->
-          <path d="M22 17 Q27 9 29 4" stroke="#7acc40" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- 葉っぱ（中央） -->
-          <path d="M22 17 Q22 10 22 5" stroke="#5ab030" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <!-- 玉ねぎ本体（外側） -->
-          <ellipse cx="22" cy="30" rx="14" ry="12" fill="#f5c842"/>
-          <!-- 玉ねぎ本体（中層） -->
-          <ellipse cx="22" cy="29" rx="11.5" ry="10" fill="#e8a810" opacity="0.6"/>
-          <!-- 玉ねぎの縦線（模様） -->
-          <path d="M14 22 Q13 30 14.5 38" stroke="#c88a08" stroke-width="1" fill="none" opacity="0.5"/>
-          <path d="M30 22 Q31 30 29.5 38" stroke="#c88a08" stroke-width="1" fill="none" opacity="0.5"/>
-          <!-- 顔：目（左） -->
-          <ellipse cx="18" cy="28" rx="2" ry="2.2" fill="#3a2000"/>
-          <!-- 顔：目（右） -->
-          <ellipse cx="26" cy="28" rx="2" ry="2.2" fill="#3a2000"/>
-          <!-- 顔：目のハイライト -->
-          <circle cx="18.8" cy="27.2" r="0.7" fill="#fff"/>
-          <circle cx="26.8" cy="27.2" r="0.7" fill="#fff"/>
-          <!-- 顔：笑顔 -->
-          <path d="M18.5 33 Q22 36 25.5 33" stroke="#3a2000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <!-- ほっぺ（赤み） -->
-          <ellipse cx="15.5" cy="32" rx="2.5" ry="1.5" fill="#ff8888" opacity="0.4"/>
-          <ellipse cx="28.5" cy="32" rx="2.5" ry="1.5" fill="#ff8888" opacity="0.4"/>
-          <!-- 根っこ -->
-          <line x1="19" y1="41.5" x2="18" y2="43" stroke="#a87820" stroke-width="1.2" stroke-linecap="round"/>
-          <line x1="22" y1="42" x2="22" y2="44" stroke="#a87820" stroke-width="1.2" stroke-linecap="round"/>
-          <line x1="25" y1="41.5" x2="26" y2="43" stroke="#a87820" stroke-width="1.2" stroke-linecap="round"/>
+<!-- ===================== HEADER ===================== -->
+<header class="site-header">
+  <div class="hdr-inner">
+    <div class="hdr-brand">
+      <!-- かわいい玉葱アイコン -->
+      <div class="hdr-icon-wrap">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+          <circle cx="24" cy="24" r="23" fill="#3d7020"/>
+          <ellipse cx="15" cy="11" rx="7" ry="4" fill="rgba(255,255,255,0.1)"/>
+          <path d="M24 19 Q19 10 17 4" stroke="#7acc40" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <path d="M24 19 Q29 10 31 4" stroke="#7acc40" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <path d="M24 19 Q24 11 24 5" stroke="#5ab030" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="24" cy="33" rx="15" ry="13" fill="#f5c842"/>
+          <ellipse cx="24" cy="32" rx="12" ry="10.5" fill="#e8a810" opacity="0.55"/>
+          <path d="M11 24 Q10 33 12 43" stroke="#c88a08" stroke-width="0.9" fill="none" opacity="0.45"/>
+          <path d="M37 24 Q38 33 36 43" stroke="#c88a08" stroke-width="0.9" fill="none" opacity="0.45"/>
+          <ellipse cx="19.5" cy="31" rx="2.1" ry="2.3" fill="#2a1500"/>
+          <ellipse cx="28.5" cy="31" rx="2.1" ry="2.3" fill="#2a1500"/>
+          <circle cx="20.4" cy="30.1" r="0.75" fill="#fff"/>
+          <circle cx="29.4" cy="30.1" r="0.75" fill="#fff"/>
+          <path d="M20 37 Q24 40.5 28 37" stroke="#2a1500" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="16.5" cy="35.5" rx="2.6" ry="1.6" fill="#ff7777" opacity="0.35"/>
+          <ellipse cx="31.5" cy="35.5" rx="2.6" ry="1.6" fill="#ff7777" opacity="0.35"/>
+          <line x1="20.5" y1="45.5" x2="19.5" y2="47.5" stroke="#8a6010" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="24" y1="46.5" x2="24" y2="48.5" stroke="#8a6010" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="27.5" y1="45.5" x2="28.5" y2="47.5" stroke="#8a6010" stroke-width="1.2" stroke-linecap="round"/>
         </svg>
-        <div class="hdr-text">
-          <div class="hdr-title">玉葱品種図鑑</div>
-          <div class="hdr-en">TAMANEGI ZUKAN</div>
-        </div>
       </div>
-      <div class="hdr-btns">
-        <button class="hbtn accent" onclick="openAdd()">
-          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          品種を追加
-        </button>
+      <div class="hdr-text">
+        <div class="hdr-title">玉葱品種図鑑</div>
+        <div class="hdr-en">TAMANEGI ZUKAN</div>
       </div>
     </div>
-    <div class="hdr-sub" id="hdr-sub">読み込み中...</div>
+    <div class="hdr-right">
+      <div class="hdr-count" id="hdr-count">全0品種</div>
+      <button class="btn-add" onclick="openAdd()">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        品種を追加
+      </button>
+    </div>
   </div>
+</header>
 
-  <!-- TABS -->
-  <div class="tabs" id="tabs"></div>
+<!-- ===================== TAB BAR ===================== -->
+<nav class="tab-bar">
+  <div class="tab-inner" id="tabs"></div>
+</nav>
 
-  <!-- SCROLL -->
-  <div class="scroll" id="scroll"></div>
+<!-- ===================== MAIN ===================== -->
+<main class="main" id="main"></main>
 
-</div>
-
-<!-- ========== ADD MODAL ========== -->
+<!-- ===================== ADD MODAL ===================== -->
 <div class="ov" id="ov-add">
-  <div class="sheet">
-    <div class="sh-hnd"></div>
-    <div class="sh-ttl">✏️ 新しい品種を追加</div>
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeOv('ov-add')">✕</button>
+    <div class="modal-title">✏️ 新しい品種を追加</div>
     <div class="fg">
       <label class="flb">品種名 *</label>
       <input class="fi" id="fn" placeholder="例：泉州中高黄" type="text">
@@ -391,17 +462,17 @@ html,body{height:100%;overflow:hidden;font-family:'Noto Sans JP',sans-serif;back
     </div>
     <div class="frow">
       <div class="fg">
-        <label class="flb">播種月（例:8,9）</label>
+        <label class="flb">播種月（例: 8,9）</label>
         <input class="fi" id="fsow" type="text" inputmode="numeric">
       </div>
       <div class="fg">
-        <label class="flb">定植月（例:11,12）</label>
+        <label class="flb">定植月（例: 11,12）</label>
         <input class="fi" id="ftr" type="text" inputmode="numeric">
       </div>
     </div>
     <div class="frow">
       <div class="fg">
-        <label class="flb">収穫月（例:5,6）</label>
+        <label class="flb">収穫月（例: 5,6）</label>
         <input class="fi" id="fhv" type="text" inputmode="numeric">
       </div>
       <div class="fg">
@@ -417,8 +488,8 @@ html,body{height:100%;overflow:hidden;font-family:'Noto Sans JP',sans-serif;back
       <label class="flb">特徴・メモ</label>
       <textarea class="fta" id="fnt" placeholder="品種の特徴、栽培ポイントなど"></textarea>
     </div>
-    <button class="btnp" onclick="doAdd()">図鑑に追加する</button>
-    <button class="btns" onclick="closeOv('ov-add')">キャンセル</button>
+    <button class="btn-submit" onclick="doAdd()">図鑑に追加する</button>
+    <button class="btn-cancel" onclick="closeOv('ov-add')">キャンセル</button>
   </div>
 </div>
 
@@ -430,12 +501,12 @@ html,body{height:100%;overflow:hidden;font-family:'Noto Sans JP',sans-serif;back
    DATA
 ============================================================ */
 const COLORS = {
-  chokugokuwase:'#b84070',gokuwase:'#c45520',wase:'#157a5a',
-  nakate:'#1a5fa8',okute:'#5040b0',red:'#8a2020',attention:'#a06010'
+  chokugokuwase:'#b84070', gokuwase:'#c45520', wase:'#157a5a',
+  nakate:'#1a5fa8', okute:'#5040b0', red:'#8a2020', attention:'#a06010'
 };
 const CNAMES = {
-  chokugokuwase:'超極早生',gokuwase:'極早生',wase:'早生',
-  nakate:'中生',okute:'晩生',red:'赤玉ねぎ',attention:'⭐ 注目品種'
+  chokugokuwase:'超極早生', gokuwase:'極早生', wase:'早生',
+  nakate:'中生', okute:'晩生', red:'赤玉ねぎ', attention:'⭐ 注目品種'
 };
 const CDESCS = {
   chokugokuwase:'最も早い品種群。真冬でも生長する特殊な性質を持ち、九州など温暖地で活用される。',
@@ -447,9 +518,8 @@ const CDESCS = {
   attention:'研究機関・種苗会社が注目する新品種・話題品種。＋ボタンで随時追加できます。',
 };
 const CATS = ['chokugokuwase','gokuwase','wase','nakate','okute','red','attention'];
-const OBL = {kyushu:'九州',hyogo:'淡路島',both:'九州・淡路島',new:'新品種'};
-const OBC = {kyushu:'ok',hyogo:'oh',both:'oboth',new:'on'};
-const LBC = {kyushu:'lk',hyogo:'lh',both:'lboth',new:'ln'};
+const OBL = { kyushu:'九州', hyogo:'淡路島', both:'九州・淡路島', new:'新品種' };
+const OBC = { kyushu:'ok', hyogo:'oh', both:'oboth', new:'on' };
 
 let DB = [
   {id:'v1',cat:'chokugokuwase',name:'スーパーアップ',maker:'アカヲ種苗',origin:'kyushu',tags:['低温伸長性高い','年内〜1月どり可','長崎・佐賀で普及'],sow:[8,9],trans:[10,11],harv:[1,2,3],wt:'250g前後',stor:'収穫後すぐ',taste:4,easy:3,note:'真冬でも肥大する革命的品種。8月播種で年内収穫も可能。長崎県を国内4位のタマネギ産地に押し上げた立役者。'},
@@ -480,48 +550,32 @@ let DB = [
 let tab = 'all';
 
 /* ============================================================
-   RENDER HELPERS
+   HELPERS
 ============================================================ */
 const strs = n => '★'.repeat(n) + '☆'.repeat(5 - n);
 
-// カテゴリ別玉葱SVG（かわいいキャラ）
 function onionChar(color, isRed) {
-  // 色調整
-  const bodyColor = isRed ? '#c83060' : color;
-  const innerColor = isRed ? '#a02040' : shadeColor(color, -20);
-  return `<svg class="onion-svg" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-    <!-- 葉 -->
-    <path d="M26 18 Q21 10 19 4" stroke="#5ab030" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <path d="M26 18 Q31 10 33 4" stroke="#5ab030" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <path d="M26 18 Q26 11 26 5" stroke="#3a8010" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-    <!-- 玉ねぎ本体 -->
-    <ellipse cx="26" cy="34" rx="16" ry="14" fill="${bodyColor}" opacity="0.92"/>
-    <ellipse cx="26" cy="33" rx="13" ry="11.5" fill="${innerColor}" opacity="0.45"/>
-    <!-- 縞模様 -->
-    <path d="M14 26 Q13 34 15 43" stroke="${innerColor}" stroke-width="0.8" fill="none" opacity="0.5" stroke-linecap="round"/>
-    <path d="M38 26 Q39 34 37 43" stroke="${innerColor}" stroke-width="0.8" fill="none" opacity="0.5" stroke-linecap="round"/>
-    <!-- 目（左） -->
-    <ellipse cx="21" cy="32" rx="1.9" ry="2.1" fill="#2a1500"/>
-    <!-- 目（右） -->
-    <ellipse cx="31" cy="32" rx="1.9" ry="2.1" fill="#2a1500"/>
-    <!-- ハイライト -->
-    <circle cx="21.8" cy="31.2" r="0.7" fill="#fff"/>
-    <circle cx="31.8" cy="31.2" r="0.7" fill="#fff"/>
-    <!-- 笑顔 -->
-    <path d="M21.5 37 Q26 40.5 30.5 37" stroke="#2a1500" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-    <!-- ほっぺ -->
-    <ellipse cx="17" cy="36" rx="2.5" ry="1.5" fill="#ff7777" opacity="0.35"/>
-    <ellipse cx="35" cy="36" rx="2.5" ry="1.5" fill="#ff7777" opacity="0.35"/>
-    <!-- 根っこ -->
-    <line x1="22" y1="47.5" x2="21" y2="50" stroke="#8a6010" stroke-width="1.1" stroke-linecap="round"/>
-    <line x1="26" y1="48" x2="26" y2="51" stroke="#8a6010" stroke-width="1.1" stroke-linecap="round"/>
-    <line x1="30" y1="47.5" x2="31" y2="50" stroke="#8a6010" stroke-width="1.1" stroke-linecap="round"/>
+  const c = isRed ? '#c03060' : color;
+  const ci = isRed ? '#902040' : color;
+  return `<svg class="onion-svg" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+    <path d="M28 20 Q22 11 20 4" stroke="#5ab030" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M28 20 Q34 11 36 4" stroke="#5ab030" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M28 20 Q28 12 28 5" stroke="#3a8010" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <ellipse cx="28" cy="37" rx="17" ry="15" fill="${c}" opacity="0.92"/>
+    <ellipse cx="28" cy="36" rx="14" ry="12.5" fill="${ci}" opacity="0.42"/>
+    <path d="M13 28 Q12 37 14 47" stroke="${ci}" stroke-width="0.9" fill="none" opacity="0.45" stroke-linecap="round"/>
+    <path d="M43 28 Q44 37 42 47" stroke="${ci}" stroke-width="0.9" fill="none" opacity="0.45" stroke-linecap="round"/>
+    <ellipse cx="21.5" cy="35" rx="2.2" ry="2.4" fill="#2a1500"/>
+    <ellipse cx="34.5" cy="35" rx="2.2" ry="2.4" fill="#2a1500"/>
+    <circle cx="22.4" cy="34" r="0.8" fill="#fff"/>
+    <circle cx="35.4" cy="34" r="0.8" fill="#fff"/>
+    <path d="M22 41.5 Q28 45.5 34 41.5" stroke="#2a1500" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <ellipse cx="18" cy="40" rx="2.8" ry="1.7" fill="#ff7777" opacity="0.33"/>
+    <ellipse cx="38" cy="40" rx="2.8" ry="1.7" fill="#ff7777" opacity="0.33"/>
+    <line x1="23" y1="51" x2="22" y2="54" stroke="#8a6010" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="28" y1="52" x2="28" y2="55" stroke="#8a6010" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="33" y1="51" x2="34" y2="54" stroke="#8a6010" stroke-width="1.2" stroke-linecap="round"/>
   </svg>`;
-}
-
-function shadeColor(hex, pct) {
-  // 簡易的な色の明度調整（使用箇所限定）
-  return hex; // そのまま返す（本体色で十分）
 }
 
 function calHtml(s, t, h) {
@@ -558,19 +612,19 @@ function cardHtml(v) {
           <span class="ob ${OBC[v.origin] || 'on'}">${OBL[v.origin] || '新品種'}</span>
         </div>
         <div class="cmkr">${v.maker || '—'}</div>
-        <div class="tagrow">${(v.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="tagrow">${(v.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
       </div>
     </div>
-    ${calHtml(v.sow || [], v.trans || [], v.harv || [])}
-    <div class="fg2">
-      <div class="fbox"><div class="flbl">平均球重</div><div class="fval">${v.wt || '—'}</div></div>
-      <div class="fbox"><div class="flbl">貯蔵期間</div><div class="fval">${v.stor || '—'}</div></div>
+    ${calHtml(v.sow||[], v.trans||[], v.harv||[])}
+    <div class="feat-grid">
+      <div class="fbox"><div class="flbl">平均球重</div><div class="fval">${v.wt||'—'}</div></div>
+      <div class="fbox"><div class="flbl">貯蔵期間</div><div class="fval">${v.stor||'—'}</div></div>
     </div>
     <div class="rrow">
-      <div><div class="flbl">食味</div><div class="stars">${strs(v.taste || 3)}</div></div>
-      <div><div class="flbl">作りやすさ</div><div class="stars">${strs(v.easy || 3)}</div></div>
+      <div><div class="flbl">食味</div><div class="stars">${strs(v.taste||3)}</div></div>
+      <div><div class="flbl">作りやすさ</div><div class="stars">${strs(v.easy||3)}</div></div>
     </div>
-    <div class="cnote">${v.note || ''}</div>
+    <div class="cnote">${v.note||''}</div>
   </div>`;
 }
 
@@ -578,16 +632,19 @@ function cardHtml(v) {
    RENDER
 ============================================================ */
 function render() {
-  // TABS
-  const ts = [{id:'all',lbl:'すべて'}, ...CATS.map(c => ({id:c, lbl:CNAMES[c]}))];
+  // Tabs
+  const ts = [{id:'all', lbl:'すべて'}, ...CATS.map(c => ({id:c, lbl:CNAMES[c]}))];
   document.getElementById('tabs').innerHTML = ts.map(t => {
-    const n = t.id === 'all' ? DB.length : DB.filter(v => v.cat === t.id).length;
-    return `<button class="tbtn${t.id === tab ? ' active' : ''}" onclick="setTab('${t.id}')">${t.lbl}<span class="cnt">${n}</span></button>`;
+    const n = t.id==='all' ? DB.length : DB.filter(v=>v.cat===t.id).length;
+    return `<button class="tbtn${t.id===tab?' active':''}" onclick="setTab('${t.id}')">${t.lbl}<span class="cnt">${n}</span></button>`;
   }).join('');
 
-  // LEGEND
+  // Header count
+  document.getElementById('hdr-count').textContent = `全 ${DB.length} 品種`;
+
+  // Legend
   const leg = `<div class="legend">
-    <div class="lgnd-ttl">産地マーク</div>
+    <span class="legend-ttl">産地マーク：</span>
     <span class="lb lk">九州</span>
     <span class="lb lh">淡路島</span>
     <span class="lb lboth">九州・淡路島</span>
@@ -600,13 +657,13 @@ function render() {
   cats.forEach(cat => {
     const items = DB.filter(v => v.cat === cat);
     if (!items.length && tab !== 'all') {
-      html += `<div class="empty"><div class="ei">🌱</div><p>まだ品種がありません。<br>＋ボタンから追加してください。</p></div>`;
+      html += `<div class="card-grid"><div class="empty"><div class="ei">🌱</div><p>まだ品種がありません。<br>＋ボタンから追加してください。</p></div></div>`;
       return;
     }
     if (!items.length) return;
 
     if (cat === 'attention') {
-      html += `<div class="att">
+      html += `<div class="att-banner">
         <div class="att-ico">⭐</div>
         <div class="att-txt">
           <h3>これから注目の品種</h3>
@@ -620,22 +677,23 @@ function render() {
         <span class="cat-badge" style="background:${COLORS[cat]}">${CNAMES[cat]}</span>
       </div>
       <div class="cat-desc">${CDESCS[cat]}</div>
-      ${items.map(cardHtml).join('')}
+      <div class="card-grid">
+        ${items.map(cardHtml).join('')}
+      </div>
     </div>`;
   });
 
-  document.getElementById('scroll').innerHTML = html;
-  document.getElementById('hdr-sub').textContent = `全${DB.length}品種収録 ／ 九州・淡路島・注目品種`;
+  document.getElementById('main').innerHTML = html;
 }
 
 function setTab(id) {
   tab = id;
   render();
-  document.getElementById('scroll').scrollTop = 0;
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 /* ============================================================
-   MODAL / ADD
+   MODAL
 ============================================================ */
 function openAdd() { document.getElementById('ov-add').classList.add('open'); }
 function closeOv(id) { document.getElementById(id).classList.remove('open'); }
@@ -643,22 +701,26 @@ function closeOv(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.ov').forEach(el => {
   el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
 });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.ov.open').forEach(el => el.classList.remove('open'));
+});
 
+/* ============================================================
+   ADD
+============================================================ */
 function pm(s) {
-  return (s || '').split(',').map(x => parseInt(x.trim())).filter(n => !isNaN(n) && n >= 1 && n <= 12);
+  return (s||'').split(',').map(x=>parseInt(x.trim())).filter(n=>!isNaN(n)&&n>=1&&n<=12);
 }
-
 function doAdd() {
   const name = document.getElementById('fn').value.trim();
   if (!name) { showToast('品種名を入力してください'); return; }
-
   const v = {
-    id: 'u' + Date.now(),
+    id: 'u'+Date.now(),
     cat: document.getElementById('fc').value,
     name,
     maker: document.getElementById('fm').value.trim() || '—',
     origin: document.getElementById('fo').value,
-    tags: document.getElementById('ftg').value.split(',').map(s => s.trim()).filter(Boolean),
+    tags: document.getElementById('ftg').value.split(',').map(s=>s.trim()).filter(Boolean),
     sow: pm(document.getElementById('fsow').value),
     trans: pm(document.getElementById('ftr').value),
     harv: pm(document.getElementById('fhv').value),
@@ -667,13 +729,9 @@ function doAdd() {
     taste: 3, easy: 3,
     note: document.getElementById('fnt').value.trim(),
   };
-
   DB.push(v);
   closeOv('ov-add');
-
-  // フォームリセット
-  ['fn','fm','ftg','fsow','ftr','fhv','fw','fst','fnt'].forEach(id => document.getElementById(id).value = '');
-
+  ['fn','fm','ftg','fsow','ftr','fhv','fw','fst','fnt'].forEach(id => document.getElementById(id).value='');
   tab = v.cat;
   render();
   showToast(`「${name}」を追加しました！`);
