@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="玉葱図鑑">
+<meta name="theme-color" content="#2d5016">
+<title>🧅 玉葱品種図鑑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+
+<!-- PWA ICON (inline SVG → data URI) -->
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjE4MCIgaGVpZ2h0PSIxODAiIHJ4PSI0MCIgZmlsbD0iIzJkNTAxNiIvPjxlbGxpcHNlIGN4PSI5MCIgY3k9IjExMCIgcng9IjU4IiByeT0iNTAiIGZpbGw9IiNmNWM4NDIiIG9wYWNpdHk9Ii45Ii8+PGVsbGlwc2UgY3g9IjkwIiBjeT0iMTA1IiByeD0iNDgiIHJ5PSI0MiIgZmlsbD0iI2U4YTgxMCIgb3BhY2l0eT0iMC42Ii8+PHBhdGggZD0iTTkwIDYwIFE4MiA0MCA3OCAyNSIgc3Ryb2tlPSIjNGFhODIwIiBzdHJva2Utd2lkdGg9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxwYXRoIGQ9Ik05MCA2MCBROSA5OCA0MiAxMDIgMjYiIHN0cm9rZT0iIzRhYTgyMCIgc3Ryb2tlLXdpZHRoPSI4IiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48cGF0aCBkPSJNOTAgNjAgUSA5MCA0OCA5MCAzMCIgc3Ryb2tlPSIjMmQ3YTEwIiBzdHJva2Utd2lkdGg9IjciIGZpbGw9Im5vbmUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjcwIiBjeT0iMTA1IiByPSI2IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjMiLz48Y2lyY2xlIGN4PSI4NSIgY3k9Ijk2IiByPSI0IiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjIiLz48L3N2Zz4=">
+
+<style>
+:root{
+  --g1:#2d5016;--g2:#3d6b1e;--g3:#5a9030;--g4:#7ab84a;
+  --amber:#c8820a;--amber-l:#f5c842;--amber-pale:#fff8e8;
+  --cream:#faf8f2;--cream2:#f2ebe0;--cream3:#e8dfc8;
+  --t1:#1e1e1e;--t2:#4a4535;--t3:#9a9080;
+  --bd:rgba(0,0,0,0.08);--sh:0 2px 16px rgba(0,0,0,0.07);
+  --r:16px;--rs:10px;
+  --orange:#c45520;--teal:#157a5a;--purple:#5040b0;
+  --pink:#b84070;--blue:#1a5fa8;--crimson:#8a2020;--gold:#a06010;
+  --star:#d4a012;
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Noto Sans JP',sans-serif;background:var(--cream);color:var(--t1)}
+
+/* ===== APP SHELL ===== */
+#app{
+  display:flex;flex-direction:column;
+  height:100dvh;max-width:480px;
+  margin:0 auto;background:var(--cream);
+  box-shadow:0 0 60px rgba(0,0,0,0.18);
+  overflow:hidden;position:relative;
+}
+
+/* ===== HEADER ===== */
+.hdr{
+  background:linear-gradient(160deg,#1e3a08 0%,#2d5016 50%,#3a6a1a 100%);
+  padding:calc(14px + var(--safe-t)) 16px 0;
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+/* 背景テクスチャ */
+.hdr::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 15% 50%,rgba(255,255,255,0.04) 0%,transparent 40%),
+    radial-gradient(circle at 85% 20%,rgba(245,200,66,0.07) 0%,transparent 35%);
+}
+.hdr-top{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;position:relative;z-index:1;
+}
+.hdr-brand{display:flex;align-items:center;gap:10px}
+.hdr-icon{width:44px;height:44px;flex-shrink:0}
+.hdr-text{}
+.hdr-title{
+  font-family:'Noto Serif JP',serif;
+  font-size:19px;font-weight:700;color:#fff;
+  letter-spacing:.06em;line-height:1.2;
+}
+.hdr-en{font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:.12em;margin-top:1px}
+.hdr-btns{display:flex;gap:7px}
+.hbtn{
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.22);
+  color:#fff;border-radius:22px;
+  padding:8px 14px;font-size:12px;font-weight:500;
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  display:flex;align-items:center;gap:5px;
+  transition:all .15s;white-space:nowrap;
+}
+.hbtn:active{background:rgba(255,255,255,0.28)}
+.hbtn.accent{background:rgba(245,200,66,0.22);border-color:rgba(245,200,66,0.4);color:var(--amber-l)}
+.hdr-sub{
+  font-size:10.5px;color:rgba(255,255,255,0.42);
+  padding-bottom:11px;position:relative;z-index:1;
+}
+
+/* ===== TABS ===== */
+.tabs{
+  background:linear-gradient(160deg,#1e3a08 0%,#2d5016 50%,#3a6a1a 100%);
+  padding:0 12px 11px;
+  display:flex;gap:6px;
+  overflow-x:auto;scrollbar-width:none;flex-shrink:0;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tbtn{
+  flex-shrink:0;padding:5px 13px;
+  font-size:11.5px;font-weight:500;
+  border-radius:22px;
+  border:1.5px solid rgba(255,255,255,0.2);
+  background:transparent;color:rgba(255,255,255,0.6);
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  transition:all .15s;
+}
+.tbtn.active{
+  background:#fff;color:var(--g1);
+  border-color:#fff;font-weight:700;
+}
+.cnt{
+  display:inline-block;
+  background:rgba(255,255,255,0.18);
+  font-size:10px;padding:0 5px;
+  border-radius:8px;margin-left:3px;
+}
+.tbtn.active .cnt{background:var(--cream2);color:var(--g2)}
+
+/* ===== SCROLL ===== */
+.scroll{
+  flex:1;overflow-y:auto;
+  padding:14px 12px calc(24px + var(--safe-b));
+  -webkit-overflow-scrolling:touch;
+}
+
+/* ===== LEGEND ===== */
+.legend{
+  display:flex;gap:6px;flex-wrap:wrap;
+  margin-bottom:14px;padding:10px 13px;
+  background:#fff;border-radius:var(--rs);
+  border:1px solid var(--bd);
+  box-shadow:var(--sh);
+}
+.lgnd-ttl{font-size:10px;color:var(--t3);width:100%}
+.lb{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.lk{background:#e8f5e0;color:#2d6a14;border:1px solid #a8d878}
+.lh{background:#e0eef8;color:#1a4f8a;border:1px solid #78aae0}
+.lboth{background:#ede8f8;color:#3830a0;border:1px solid #a898e8}
+.ln{background:#fff3e0;color:#a06010;border:1px solid #f0b840}
+
+/* ===== CATEGORY ===== */
+.cat-sec{margin-bottom:22px}
+.cat-hdr{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.cat-badge{font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;color:#fff;letter-spacing:.03em}
+.cat-desc{
+  font-size:11.5px;color:var(--t2);line-height:1.75;
+  margin-bottom:11px;padding:9px 12px;
+  background:rgba(0,0,0,0.025);
+  border-radius:var(--rs);
+  border-left:3px solid var(--cream3);
+}
+
+/* ===== ATTENTION BANNER ===== */
+.att{
+  background:linear-gradient(135deg,#231000 0%,#5a2800 60%,#7a3800 100%);
+  border-radius:var(--r);padding:14px;
+  margin-bottom:13px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 4px 20px rgba(100,40,0,0.25);
+}
+.att-ico{font-size:30px;flex-shrink:0}
+.att h3{color:var(--amber-l);font-size:13.5px;font-weight:700}
+.att p{color:rgba(255,255,255,0.6);font-size:11px;margin-top:3px;line-height:1.55}
+
+/* ===== CARD ===== */
+.card{
+  background:#fff;border-radius:var(--r);
+  border:1px solid var(--bd);
+  padding:15px;margin-bottom:11px;
+  box-shadow:var(--sh);
+}
+.card-hdr{display:flex;align-items:flex-start;gap:11px;margin-bottom:13px}
+.onion-svg{width:52px;height:52px;flex-shrink:0}
+.cmeta{flex:1;min-width:0}
+.cnrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cname{font-size:15px;font-weight:700;color:var(--t1)}
+.ob{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px}
+.ok{background:#e8f5e0;color:#2d6a14;border:1px solid #a8d878}
+.oh{background:#e0eef8;color:#1a4f8a;border:1px solid #78aae0}
+.oboth{background:#ede8f8;color:#3830a0;border:1px solid #a898e8}
+.on{background:#fff3e0;color:#a06010;border:1px solid #f0b840}
+.cmkr{font-size:11px;color:var(--t3);margin-top:3px}
+.tagrow{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+.tag{
+  font-size:10.5px;padding:2px 8px;border-radius:6px;
+  background:var(--cream2);color:var(--t2);
+  border:1px solid rgba(0,0,0,0.07);
+}
+
+/* ===== CALENDAR ===== */
+.cal{margin-bottom:11px}
+.cl-lbl{font-size:10px;color:var(--t3);margin-bottom:4px}
+.cl-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+.cl-m{font-size:8.5px;color:var(--t3);text-align:center;padding-bottom:2px}
+.cl-b{height:9px;border-radius:2px;background:#eee}
+.cs{background:var(--orange)}
+.ct{background:var(--teal)}
+.ch{background:var(--purple)}
+.cl-leg{display:flex;gap:12px;margin-top:6px}
+.cli{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--t2)}
+.cld{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+
+/* ===== FEAT ===== */
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
+.fbox{background:var(--cream2);border-radius:var(--rs);padding:8px 11px;text-align:center}
+.flbl{font-size:10px;color:var(--t3)}
+.fval{font-size:12px;font-weight:700;color:var(--t1);margin-top:2px}
+.rrow{display:flex;gap:16px;margin-bottom:8px}
+.stars{color:var(--star);font-size:12px;letter-spacing:1px}
+.cnote{font-size:11.5px;color:var(--t2);line-height:1.75}
+
+/* ===== MODALS ===== */
+.ov{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.55);z-index:300;
+  align-items:flex-end;justify-content:center;
+  max-width:480px;margin:0 auto;
+}
+.ov.open{display:flex}
+.sheet{
+  background:#fff;border-radius:22px 22px 0 0;
+  width:100%;max-height:93dvh;
+  overflow-y:auto;
+  padding:0 17px calc(30px + var(--safe-b));
+}
+.sh-hnd{
+  width:42px;height:4px;background:#ddd;
+  border-radius:2px;margin:14px auto 17px;
+}
+.sh-ttl{font-size:17px;font-weight:700;margin-bottom:17px;color:var(--t1)}
+.fg{margin-bottom:14px}
+.flb{font-size:12px;font-weight:500;color:var(--t2);margin-bottom:5px;display:block}
+.fi,.fs,.fta{
+  width:100%;padding:11px 13px;
+  border:1.5px solid var(--bd);border-radius:var(--rs);
+  font-size:14px;font-family:'Noto Sans JP',sans-serif;
+  background:#fff;color:var(--t1);
+  outline:none;transition:border-color .15s;
+  -webkit-appearance:none;
+}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--g3)}
+.fta{resize:vertical;min-height:75px;line-height:1.65}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.btnp{
+  width:100%;padding:14px;
+  background:var(--g1);color:#fff;border:none;
+  border-radius:var(--rs);font-size:15px;font-weight:700;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;margin-top:7px;transition:background .15s;
+}
+.btnp:active{background:var(--g2)}
+.btns{
+  width:100%;padding:12px;background:transparent;
+  color:var(--t2);border:1.5px solid var(--bd);
+  border-radius:var(--rs);font-size:14px;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;margin-top:9px;
+}
+
+/* ===== TOAST ===== */
+.toast{
+  position:fixed;
+  top:calc(20px + var(--safe-t));left:50%;
+  transform:translateX(-50%) translateY(-90px);
+  background:var(--g1);color:#fff;
+  padding:11px 22px;border-radius:32px;
+  font-size:13px;font-weight:500;z-index:999;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;pointer-events:none;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ===== EMPTY ===== */
+.empty{text-align:center;padding:48px 20px;color:var(--t3)}
+.empty .ei{font-size:48px;margin-bottom:12px}
+.empty p{font-size:13px;line-height:1.75}
+
+/* ===== DESKTOP ===== */
+@media(min-width:500px){
+  body{background:#d8d0c0;display:flex;align-items:center;justify-content:center;height:100vh}
+  #app{height:min(900px,96dvh);border-radius:26px}
+  .ov{border-radius:26px;overflow:hidden}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-top">
+      <div class="hdr-brand">
+        <!-- アプリアイコン（かわいいSVG玉葱キャラ） -->
+        <svg class="hdr-icon" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+          <!-- 丸いグリーン背景 -->
+          <circle cx="22" cy="22" r="21" fill="#3d7020"/>
+          <!-- 光沢 -->
+          <ellipse cx="14" cy="10" rx="7" ry="4" fill="rgba(255,255,255,0.12)"/>
+          <!-- 葉っぱ（左） -->
+          <path d="M22 17 Q17 9 15 4" stroke="#7acc40" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- 葉っぱ（右） -->
+          <path d="M22 17 Q27 9 29 4" stroke="#7acc40" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- 葉っぱ（中央） -->
+          <path d="M22 17 Q22 10 22 5" stroke="#5ab030" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- 玉ねぎ本体（外側） -->
+          <ellipse cx="22" cy="30" rx="14" ry="12" fill="#f5c842"/>
+          <!-- 玉ねぎ本体（中層） -->
+          <ellipse cx="22" cy="29" rx="11.5" ry="10" fill="#e8a810" opacity="0.6"/>
+          <!-- 玉ねぎの縦線（模様） -->
+          <path d="M14 22 Q13 30 14.5 38" stroke="#c88a08" stroke-width="1" fill="none" opacity="0.5"/>
+          <path d="M30 22 Q31 30 29.5 38" stroke="#c88a08" stroke-width="1" fill="none" opacity="0.5"/>
+          <!-- 顔：目（左） -->
+          <ellipse cx="18" cy="28" rx="2" ry="2.2" fill="#3a2000"/>
+          <!-- 顔：目（右） -->
+          <ellipse cx="26" cy="28" rx="2" ry="2.2" fill="#3a2000"/>
+          <!-- 顔：目のハイライト -->
+          <circle cx="18.8" cy="27.2" r="0.7" fill="#fff"/>
+          <circle cx="26.8" cy="27.2" r="0.7" fill="#fff"/>
+          <!-- 顔：笑顔 -->
+          <path d="M18.5 33 Q22 36 25.5 33" stroke="#3a2000" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- ほっぺ（赤み） -->
+          <ellipse cx="15.5" cy="32" rx="2.5" ry="1.5" fill="#ff8888" opacity="0.4"/>
+          <ellipse cx="28.5" cy="32" rx="2.5" ry="1.5" fill="#ff8888" opacity="0.4"/>
+          <!-- 根っこ -->
+          <line x1="19" y1="41.5" x2="18" y2="43" stroke="#a87820" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="22" y1="42" x2="22" y2="44" stroke="#a87820" stroke-width="1.2" stroke-linecap="round"/>
+          <line x1="25" y1="41.5" x2="26" y2="43" stroke="#a87820" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        <div class="hdr-text">
+          <div class="hdr-title">玉葱品種図鑑</div>
+          <div class="hdr-en">TAMANEGI ZUKAN</div>
+        </div>
+      </div>
+      <div class="hdr-btns">
+        <button class="hbtn accent" onclick="openAdd()">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v11M1 6.5h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          品種を追加
+        </button>
+      </div>
+    </div>
+    <div class="hdr-sub" id="hdr-sub">読み込み中...</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs" id="tabs"></div>
+
+  <!-- SCROLL -->
+  <div class="scroll" id="scroll"></div>
+
+</div>
+
+<!-- ========== ADD MODAL ========== -->
+<div class="ov" id="ov-add">
+  <div class="sheet">
+    <div class="sh-hnd"></div>
+    <div class="sh-ttl">✏️ 新しい品種を追加</div>
+    <div class="fg">
+      <label class="flb">品種名 *</label>
+      <input class="fi" id="fn" placeholder="例：泉州中高黄" type="text">
+    </div>
+    <div class="frow">
+      <div class="fg">
+        <label class="flb">種苗会社・育成元</label>
+        <input class="fi" id="fm" placeholder="例：タキイ種苗" type="text">
+      </div>
+      <div class="fg">
+        <label class="flb">早晩性 *</label>
+        <select class="fs" id="fc">
+          <option value="chokugokuwase">超極早生</option>
+          <option value="gokuwase">極早生</option>
+          <option value="wase">早生</option>
+          <option value="nakate" selected>中生</option>
+          <option value="okute">晩生</option>
+          <option value="red">赤玉ねぎ</option>
+          <option value="attention">⭐ 注目品種</option>
+        </select>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg">
+        <label class="flb">産地</label>
+        <select class="fs" id="fo">
+          <option value="kyushu">九州</option>
+          <option value="hyogo">淡路島</option>
+          <option value="both">九州・淡路島</option>
+          <option value="new">新品種</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label class="flb">平均球重</label>
+        <input class="fi" id="fw" placeholder="例：300g前後" type="text">
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg">
+        <label class="flb">播種月（例:8,9）</label>
+        <input class="fi" id="fsow" type="text" inputmode="numeric">
+      </div>
+      <div class="fg">
+        <label class="flb">定植月（例:11,12）</label>
+        <input class="fi" id="ftr" type="text" inputmode="numeric">
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg">
+        <label class="flb">収穫月（例:5,6）</label>
+        <input class="fi" id="fhv" type="text" inputmode="numeric">
+      </div>
+      <div class="fg">
+        <label class="flb">貯蔵期間</label>
+        <input class="fi" id="fst" placeholder="例：〜12月" type="text">
+      </div>
+    </div>
+    <div class="fg">
+      <label class="flb">タグ（カンマ区切り）</label>
+      <input class="fi" id="ftg" placeholder="例：病気に強い,大玉,甘み強い" type="text">
+    </div>
+    <div class="fg">
+      <label class="flb">特徴・メモ</label>
+      <textarea class="fta" id="fnt" placeholder="品種の特徴、栽培ポイントなど"></textarea>
+    </div>
+    <button class="btnp" onclick="doAdd()">図鑑に追加する</button>
+    <button class="btns" onclick="closeOv('ov-add')">キャンセル</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   DATA
+============================================================ */
+const COLORS = {
+  chokugokuwase:'#b84070',gokuwase:'#c45520',wase:'#157a5a',
+  nakate:'#1a5fa8',okute:'#5040b0',red:'#8a2020',attention:'#a06010'
+};
+const CNAMES = {
+  chokugokuwase:'超極早生',gokuwase:'極早生',wase:'早生',
+  nakate:'中生',okute:'晩生',red:'赤玉ねぎ',attention:'⭐ 注目品種'
+};
+const CDESCS = {
+  chokugokuwase:'最も早い品種群。真冬でも生長する特殊な性質を持ち、九州など温暖地で活用される。',
+  gokuwase:'3月中旬〜4月上旬収穫。水分多く甘みが強い新玉ねぎ。生食に最適、貯蔵には不向き。',
+  wase:'4月〜5月上旬収穫。甘みが強く「新玉ねぎ」として流通。8月頃まで貯蔵可能。',
+  nakate:'5月〜6月上旬収穫。加熱すると甘みが増す。12月頃まで貯蔵可。淡路島で最も多く栽培される区分。',
+  okute:'5月下旬〜6月収穫。最大翌年3月まで長期貯蔵可能。スーパーで最も多く流通するポピュラーな玉ねぎ。',
+  red:'紫紅色の外皮が特徴。抗酸化成分フラボノイドを多く含む。辛みが少なく甘みが強い。サラダに最適。',
+  attention:'研究機関・種苗会社が注目する新品種・話題品種。＋ボタンで随時追加できます。',
+};
+const CATS = ['chokugokuwase','gokuwase','wase','nakate','okute','red','attention'];
+const OBL = {kyushu:'九州',hyogo:'淡路島',both:'九州・淡路島',new:'新品種'};
+const OBC = {kyushu:'ok',hyogo:'oh',both:'oboth',new:'on'};
+const LBC = {kyushu:'lk',hyogo:'lh',both:'lboth',new:'ln'};
+
+let DB = [
+  {id:'v1',cat:'chokugokuwase',name:'スーパーアップ',maker:'アカヲ種苗',origin:'kyushu',tags:['低温伸長性高い','年内〜1月どり可','長崎・佐賀で普及'],sow:[8,9],trans:[10,11],harv:[1,2,3],wt:'250g前後',stor:'収穫後すぐ',taste:4,easy:3,note:'真冬でも肥大する革命的品種。8月播種で年内収穫も可能。長崎県を国内4位のタマネギ産地に押し上げた立役者。'},
+  {id:'v2',cat:'chokugokuwase',name:'加津佐13号',maker:'アカヲ種苗',origin:'kyushu',tags:['超極早生','スーパーアップより7〜10日早い','長崎発祥'],sow:[8,9],trans:[10,11],harv:[12,1,2],wt:'250g前後',stor:'収穫後すぐ',taste:4,easy:3,note:'スーパーアップの姉妹品種。草勢コンパクトで食味良好。長崎市加津佐町の農家と共同育種した地域密着型品種。'},
+  {id:'v3',cat:'gokuwase',name:'春一番',maker:'各社',origin:'both',tags:['定番極早生','甘み強い','新玉ねぎ向き'],sow:[8,9],trans:[10,11],harv:[3,4],wt:'250〜280g',stor:'2〜3週間',taste:5,easy:4,note:'九州・淡路島両産地で広く栽培される定番極早生品種。糖度高くサラダに最適。'},
+  {id:'v4',cat:'gokuwase',name:'レクスター',maker:'タキイ種苗',origin:'both',tags:['扁平球','病気に強い','淡路島でも人気'],sow:[8,9],trans:[10,11],harv:[3,4],wt:'250g前後',stor:'2〜3週間',taste:4,easy:4,note:'淡路島・九州・佐賀でも多く栽培される。糖度高くサラダ向き。'},
+  {id:'v5',cat:'gokuwase',name:'フォーカス',maker:'各社',origin:'kyushu',tags:['大玉','トウ立ち少ない','分球少ない'],sow:[8,9],trans:[10,11],harv:[3,4],wt:'280g前後',stor:'2〜3週間',taste:4,easy:4,note:'作りやすい早どりタイプ。分球も少ない。九州暖地向き品種。'},
+  {id:'v6',cat:'wase',name:'七宝早生7号',maker:'七宝農産',origin:'both',tags:['淡路島代表品種','甘み・旨み抜群','「淡の春」として出荷'],sow:[9],trans:[11],harv:[4,5],wt:'350〜400g',stor:'〜8月',taste:5,easy:4,note:'淡路島を代表する早生品種。JA淡路日の出で「淡の春」として出荷。肉厚でみずみずしく旨味が凝縮。九州でも広く栽培。'},
+  {id:'v7',cat:'wase',name:'ソニック',maker:'タキイ種苗',origin:'both',tags:['病気に強い','耐寒性高い','家庭菜園向き'],sow:[9],trans:[11],harv:[4,5],wt:'320g',stor:'〜8月',taste:4,easy:5,note:'耐寒性高く生育旺盛で初心者にもおすすめ。淡路島・九州両方で栽培実績あり。吊り玉で8月末まで貯蔵可。'},
+  {id:'v8',cat:'nakate',name:'ターザン',maker:'各社',origin:'hyogo',tags:['淡路島の代表品種','つり玉保存向き','加熱調理で甘みUP'],sow:[9],trans:[11,12],harv:[5,6],wt:'300g前後',stor:'〜12月',taste:5,easy:4,note:'淡路島で最も多く栽培される中生品種。加熱料理で甘みが増す。ターザン・もみじ3号が淡路島産の代表2品種。'},
+  {id:'v9',cat:'nakate',name:'ターボ',maker:'タキイ種苗',origin:'both',tags:['病気に強い','大玉多収','安定栽培'],sow:[9],trans:[11,12],harv:[5,6],wt:'320g',stor:'〜12月',taste:4,easy:5,note:'病気に強く育てやすい中生種。淡路島でも多く栽培。球重320gで収穫量も安定。'},
+  {id:'v10',cat:'nakate',name:'アンサー',maker:'各社',origin:'hyogo',tags:['淡路島で栽培','つり玉向き','貯蔵安定'],sow:[9],trans:[11,12],harv:[5,6],wt:'300g前後',stor:'〜12月',taste:3,easy:4,note:'淡路島で栽培される中生品種。保存性に優れ冷蔵・吊り玉保存に適する。'},
+  {id:'v11',cat:'nakate',name:'うずしお',maker:'各社',origin:'hyogo',tags:['淡路島固有','甘み強い','加熱調理向き'],sow:[9],trans:[11,12],harv:[5,6],wt:'300g前後',stor:'〜12月',taste:4,easy:4,note:'淡路島（南あわじ）で栽培される中生品種。「うずしお」の地名にちなんだ淡路島らしい品種。'},
+  {id:'v12',cat:'nakate',name:'アドバンス',maker:'各社',origin:'hyogo',tags:['中生','淡路島で栽培','炒め物・カレー向き'],sow:[9],trans:[11,12],harv:[5,6],wt:'300g前後',stor:'〜12月',taste:4,easy:4,note:'淡路島で栽培される中生品種。加熱で甘みが増し、炒め物・カレーに最適。'},
+  {id:'v13',cat:'okute',name:'もみじ3号',maker:'七宝農産',origin:'hyogo',tags:['玉ねぎの王様','10ヶ月貯蔵可','高糖度・肉厚'],sow:[9],trans:[12],harv:[6],wt:'320g以上',stor:'翌年3月',taste:5,easy:4,note:'「玉ねぎの王様」と称される淡路島代表の晩生品種。昭和42年七宝で育成。乾燥後に皮が紅葉色になるのが名前の由来。甘みと辛みのバランスが絶妙。'},
+  {id:'v14',cat:'okute',name:'もみじの輝',maker:'七宝農産',origin:'hyogo',tags:['晩生','長期貯蔵','茶色い綺麗な皮'],sow:[9],trans:[12],harv:[6],wt:'300g前後',stor:'翌年3月',taste:4,easy:4,note:'淡路島で栽培されるもみじ系の晩生品種。茶色い綺麗な皮色が特徴。長期貯蔵に向く。'},
+  {id:'v15',cat:'okute',name:'ネオアース',maker:'タキイ種苗',origin:'both',tags:['貯蔵性抜群','翌年3月まで','超定番'],sow:[9,10],trans:[12],harv:[6],wt:'350〜530g',stor:'翌年3月',taste:5,easy:4,note:'皮色が濃くつやがある豊円球。実がよくしまり甘みが強い。淡路島・九州・全国で幅広く栽培される超定番品種。'},
+  {id:'v16',cat:'okute',name:'パワー',maker:'各社',origin:'both',tags:['長期貯蔵','安定収量','市場流通多い'],sow:[9,10],trans:[12],harv:[6],wt:'290g前後',stor:'翌年3月',taste:4,easy:4,note:'長期貯蔵に最適な晩生品種。市場で安定して流通する。九州・淡路島両産地で作付け実績あり。'},
+  {id:'v17',cat:'okute',name:'ケルたま',maker:'タキイ種苗',origin:'both',tags:['ケルセチン2倍','機能性品種','健康志向'],sow:[9,10],trans:[12],harv:[6],wt:'300g前後',stor:'翌年3月',taste:3,easy:4,note:'機能性成分ケルセチンが通常の約2倍。淡路島・九州両産地で栽培される健康志向品種。'},
+  {id:'v18',cat:'red',name:'アーリーレッド',maker:'各社',origin:'hyogo',tags:['鮮やかな赤紫色','サラダ向き','辛み少ない'],sow:[9],trans:[11,12],harv:[5,6],wt:'250〜300g',stor:'〜9月',taste:4,easy:4,note:'淡路島で栽培される赤玉品種。鮮やかな赤紫色で彩りよくサラダに活躍。'},
+  {id:'v19',cat:'red',name:'紅（べに）',maker:'各社',origin:'hyogo',tags:['淡路島の赤玉品種','甘み強い','サンドイッチ向き'],sow:[9],trans:[11,12],harv:[5,6],wt:'250g前後',stor:'〜9月',taste:4,easy:3,note:'淡路島で栽培される赤玉品種。「紅」の名にふさわしい鮮やかな色合い。サラダ・サンドイッチに人気。'},
+  {id:'v20',cat:'red',name:'T-457',maker:'タキイ種苗',origin:'hyogo',tags:['分球少ない','栽培しやすい','赤玉定番'],sow:[9],trans:[11,12],harv:[5,6],wt:'280g前後',stor:'〜9月',taste:3,easy:4,note:'淡路島で栽培される赤玉品種。分球や葉折れが少なく栽培しやすい。'},
+  {id:'v21',cat:'attention',name:'アトン',maker:'タキイ種苗',origin:'both',tags:['⭐ 注目','超大玉600g超','加工・業務用向き'],sow:[9,10],trans:[12],harv:[6],wt:'600g以上',stor:'翌年2月',taste:4,easy:3,note:'1球600g以上になる超大玉の中晩生品種。加工・業務用に最適だが食味も良く、大玉栽培で注目される。'},
+  {id:'v22',cat:'attention',name:'泉州中高黄',maker:'各社',origin:'kyushu',tags:['⭐ 注目','九州・佐賀で採用拡大','中生優良品種'],sow:[9],trans:[12],harv:[5,6],wt:'300g前後',stor:'〜12月',taste:4,easy:4,note:'九州・佐賀県を中心に採用が拡大している中生品種。甘みと貯蔵性のバランスが良い。'},
+  {id:'v23',cat:'attention',name:'OKほまれ',maker:'各社',origin:'hyogo',tags:['⭐ 注目','耐病性強化型','農薬低減栽培向き'],sow:[9],trans:[11,12],harv:[5,6],wt:'320g前後',stor:'〜12月',taste:4,easy:5,note:'淡路島で注目されている耐病性の強い新しい中生品種。べと病・灰色腐敗病への抵抗性が強く、農薬使用量の低減が期待される。'},
+];
+
+let tab = 'all';
+
+/* ============================================================
+   RENDER HELPERS
+============================================================ */
+const strs = n => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+// カテゴリ別玉葱SVG（かわいいキャラ）
+function onionChar(color, isRed) {
+  // 色調整
+  const bodyColor = isRed ? '#c83060' : color;
+  const innerColor = isRed ? '#a02040' : shadeColor(color, -20);
+  return `<svg class="onion-svg" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+    <!-- 葉 -->
+    <path d="M26 18 Q21 10 19 4" stroke="#5ab030" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M26 18 Q31 10 33 4" stroke="#5ab030" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M26 18 Q26 11 26 5" stroke="#3a8010" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <!-- 玉ねぎ本体 -->
+    <ellipse cx="26" cy="34" rx="16" ry="14" fill="${bodyColor}" opacity="0.92"/>
+    <ellipse cx="26" cy="33" rx="13" ry="11.5" fill="${innerColor}" opacity="0.45"/>
+    <!-- 縞模様 -->
+    <path d="M14 26 Q13 34 15 43" stroke="${innerColor}" stroke-width="0.8" fill="none" opacity="0.5" stroke-linecap="round"/>
+    <path d="M38 26 Q39 34 37 43" stroke="${innerColor}" stroke-width="0.8" fill="none" opacity="0.5" stroke-linecap="round"/>
+    <!-- 目（左） -->
+    <ellipse cx="21" cy="32" rx="1.9" ry="2.1" fill="#2a1500"/>
+    <!-- 目（右） -->
+    <ellipse cx="31" cy="32" rx="1.9" ry="2.1" fill="#2a1500"/>
+    <!-- ハイライト -->
+    <circle cx="21.8" cy="31.2" r="0.7" fill="#fff"/>
+    <circle cx="31.8" cy="31.2" r="0.7" fill="#fff"/>
+    <!-- 笑顔 -->
+    <path d="M21.5 37 Q26 40.5 30.5 37" stroke="#2a1500" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    <!-- ほっぺ -->
+    <ellipse cx="17" cy="36" rx="2.5" ry="1.5" fill="#ff7777" opacity="0.35"/>
+    <ellipse cx="35" cy="36" rx="2.5" ry="1.5" fill="#ff7777" opacity="0.35"/>
+    <!-- 根っこ -->
+    <line x1="22" y1="47.5" x2="21" y2="50" stroke="#8a6010" stroke-width="1.1" stroke-linecap="round"/>
+    <line x1="26" y1="48" x2="26" y2="51" stroke="#8a6010" stroke-width="1.1" stroke-linecap="round"/>
+    <line x1="30" y1="47.5" x2="31" y2="50" stroke="#8a6010" stroke-width="1.1" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function shadeColor(hex, pct) {
+  // 簡易的な色の明度調整（使用箇所限定）
+  return hex; // そのまま返す（本体色で十分）
+}
+
+function calHtml(s, t, h) {
+  let m = '', b = '';
+  for (let i = 1; i <= 12; i++) {
+    m += `<div class="cl-m">${i}</div>`;
+    let c = 'cl-b';
+    if (s.includes(i)) c += ' cs';
+    else if (t.includes(i)) c += ' ct';
+    else if (h.includes(i)) c += ' ch';
+    b += `<div class="${c}"></div>`;
+  }
+  return `<div class="cal">
+    <div class="cl-lbl">作付けカレンダー（月）</div>
+    <div class="cl-grid">${m}</div>
+    <div class="cl-grid" style="margin-top:2px">${b}</div>
+    <div class="cl-leg">
+      <div class="cli"><div class="cld" style="background:#c45520"></div>播種</div>
+      <div class="cli"><div class="cld" style="background:#157a5a"></div>定植</div>
+      <div class="cli"><div class="cld" style="background:#5040b0"></div>収穫</div>
+    </div>
+  </div>`;
+}
+
+function cardHtml(v) {
+  const isRed = v.cat === 'red';
+  const color = COLORS[v.cat] || '#888';
+  return `<div class="card">
+    <div class="card-hdr">
+      ${onionChar(color, isRed)}
+      <div class="cmeta">
+        <div class="cnrow">
+          <span class="cname">${v.name}</span>
+          <span class="ob ${OBC[v.origin] || 'on'}">${OBL[v.origin] || '新品種'}</span>
+        </div>
+        <div class="cmkr">${v.maker || '—'}</div>
+        <div class="tagrow">${(v.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>
+    ${calHtml(v.sow || [], v.trans || [], v.harv || [])}
+    <div class="fg2">
+      <div class="fbox"><div class="flbl">平均球重</div><div class="fval">${v.wt || '—'}</div></div>
+      <div class="fbox"><div class="flbl">貯蔵期間</div><div class="fval">${v.stor || '—'}</div></div>
+    </div>
+    <div class="rrow">
+      <div><div class="flbl">食味</div><div class="stars">${strs(v.taste || 3)}</div></div>
+      <div><div class="flbl">作りやすさ</div><div class="stars">${strs(v.easy || 3)}</div></div>
+    </div>
+    <div class="cnote">${v.note || ''}</div>
+  </div>`;
+}
+
+/* ============================================================
+   RENDER
+============================================================ */
+function render() {
+  // TABS
+  const ts = [{id:'all',lbl:'すべて'}, ...CATS.map(c => ({id:c, lbl:CNAMES[c]}))];
+  document.getElementById('tabs').innerHTML = ts.map(t => {
+    const n = t.id === 'all' ? DB.length : DB.filter(v => v.cat === t.id).length;
+    return `<button class="tbtn${t.id === tab ? ' active' : ''}" onclick="setTab('${t.id}')">${t.lbl}<span class="cnt">${n}</span></button>`;
+  }).join('');
+
+  // LEGEND
+  const leg = `<div class="legend">
+    <div class="lgnd-ttl">産地マーク</div>
+    <span class="lb lk">九州</span>
+    <span class="lb lh">淡路島</span>
+    <span class="lb lboth">九州・淡路島</span>
+    <span class="lb ln">新品種</span>
+  </div>`;
+
+  let html = leg;
+  const cats = tab === 'all' ? CATS : [tab];
+
+  cats.forEach(cat => {
+    const items = DB.filter(v => v.cat === cat);
+    if (!items.length && tab !== 'all') {
+      html += `<div class="empty"><div class="ei">🌱</div><p>まだ品種がありません。<br>＋ボタンから追加してください。</p></div>`;
+      return;
+    }
+    if (!items.length) return;
+
+    if (cat === 'attention') {
+      html += `<div class="att">
+        <div class="att-ico">⭐</div>
+        <div class="att-txt">
+          <h3>これから注目の品種</h3>
+          <p>研究・普及が進む新品種や話題の品種。＋ボタンで随時追加できます。</p>
+        </div>
+      </div>`;
+    }
+
+    html += `<div class="cat-sec">
+      <div class="cat-hdr">
+        <span class="cat-badge" style="background:${COLORS[cat]}">${CNAMES[cat]}</span>
+      </div>
+      <div class="cat-desc">${CDESCS[cat]}</div>
+      ${items.map(cardHtml).join('')}
+    </div>`;
+  });
+
+  document.getElementById('scroll').innerHTML = html;
+  document.getElementById('hdr-sub').textContent = `全${DB.length}品種収録 ／ 九州・淡路島・注目品種`;
+}
+
+function setTab(id) {
+  tab = id;
+  render();
+  document.getElementById('scroll').scrollTop = 0;
+}
+
+/* ============================================================
+   MODAL / ADD
+============================================================ */
+function openAdd() { document.getElementById('ov-add').classList.add('open'); }
+function closeOv(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.ov').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+function pm(s) {
+  return (s || '').split(',').map(x => parseInt(x.trim())).filter(n => !isNaN(n) && n >= 1 && n <= 12);
+}
+
+function doAdd() {
+  const name = document.getElementById('fn').value.trim();
+  if (!name) { showToast('品種名を入力してください'); return; }
+
+  const v = {
+    id: 'u' + Date.now(),
+    cat: document.getElementById('fc').value,
+    name,
+    maker: document.getElementById('fm').value.trim() || '—',
+    origin: document.getElementById('fo').value,
+    tags: document.getElementById('ftg').value.split(',').map(s => s.trim()).filter(Boolean),
+    sow: pm(document.getElementById('fsow').value),
+    trans: pm(document.getElementById('ftr').value),
+    harv: pm(document.getElementById('fhv').value),
+    wt: document.getElementById('fw').value.trim() || '—',
+    stor: document.getElementById('fst').value.trim() || '—',
+    taste: 3, easy: 3,
+    note: document.getElementById('fnt').value.trim(),
+  };
+
+  DB.push(v);
+  closeOv('ov-add');
+
+  // フォームリセット
+  ['fn','fm','ftg','fsow','ftr','fhv','fw','fst','fnt'].forEach(id => document.getElementById(id).value = '');
+
+  tab = v.cat;
+  render();
+  showToast(`「${name}」を追加しました！`);
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+render();
+</script>
+</body>
+</html>
